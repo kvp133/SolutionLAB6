@@ -45,6 +45,12 @@ public class HashTable {
     }
      public static void calculateFrequency(Hashtable<String, StudentMark> studentMarksMap) {
         HashMap<Double, Integer> frequencyMap = new HashMap<>();
+        double minScore = Double.MAX_VALUE;
+        double maxScore = Double.MIN_VALUE;
+        int minFrequency = Integer.MAX_VALUE;
+        int maxFrequency = Integer.MIN_VALUE;
+        double minScoreFrequency = Double.MAX_VALUE;
+        double maxScoreFrequency = Double.MIN_VALUE;
 
         // Duyệt qua từng sinh viên để tính tần suất
         for (StudentMark studentMark : studentMarksMap.values()) {
@@ -68,12 +74,32 @@ public class HashTable {
             double markAverage = studentMark.getMarkAverage();
             frequencyMap.put(markAverage, frequencyMap.getOrDefault(markAverage, 0) + 1);
         }
-
+        
         // In thông kê tần suất
         System.out.println("Thống kê tần suất từng điểm:");
         for (Map.Entry<Double, Integer> entry : frequencyMap.entrySet()) {
             System.out.println("Điểm " + entry.getKey() + ": " + entry.getValue() + " lần");
+            if(entry.getValue()<minFrequency){
+                minFrequency=entry.getValue();
+                minScoreFrequency=entry.getKey();
+            }
+            if(entry.getValue()>maxFrequency){
+                maxFrequency=entry.getValue();
+                maxScoreFrequency=entry.getKey();
+            }
+            
         }
+        
+        for (Map.Entry<Double, Integer> entry : frequencyMap.entrySet()) {
+            if(entry.getKey()<minScore) minScore=entry.getKey(); 
+        }
+        System.out.println("Điểm thấp nhất là " + minScore );
+        for (Map.Entry<Double, Integer> entry : frequencyMap.entrySet()) {
+            if(entry.getKey()>maxScore) maxScore=entry.getKey(); 
+        }
+        System.out.println("Điểm cao nhất là " + maxScore );
+        System.out.println("Điểm xuất hiện ít nhất " + minScoreFrequency + ": " + minFrequency + " lần");
+        System.out.println("Điểm xuất hiện nhiều nhất " + maxScoreFrequency + ": " + maxFrequency + " lần");
     }
     public static void main(String[] args) {
          String filePath = "D:/Project PRJ/HashTable/data.txt";
